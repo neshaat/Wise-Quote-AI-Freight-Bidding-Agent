@@ -207,25 +207,6 @@ Every transition is validated — illegal jumps raise immediately. Every state c
 
 ---
 
-## Design Decisions
-
-### LLM orchestrates — tools execute
-Business logic (rate selection, markup, state transitions) lives entirely in deterministic Python. The model's only job is to call the right tools in the right order. This means the same input always produces the same quote regardless of which model is used — financials are never at the mercy of model non-determinism.
-
-### One pipeline, two intake channels
-The email parser's only responsibility is converting a human-written email into the same structured dictionary that the form produces. After that, both paths call the identical `run_agent()` function. Adding new intake channels (Slack, REST API, WhatsApp) means writing one adapter — the core logic never changes.
-
-### Two-round competitive bidding
-Round 1 collects blind bids. Round 2 reveals the lowest rate and gives non-winners a shorter window to counter. This creates genuine price pressure rather than simple rate collection — a carrier who bid $420 blind may return with $385 when told the floor is $390.
-
-### Simulating time without blocking
-Carriers are assigned random response times drawn from realistic per-carrier profiles. No `time.sleep()` is used — a carrier is included if its simulated time falls within the configured window, excluded otherwise. In production the only change is the source of the timestamp: a real elapsed API response time rather than a random number.
-
-### State machine as process backbone
-Validated transitions and an append-only audit log bring structure to what would otherwise be a loosely coupled agentic workflow. Operations teams always know exactly where every quote stands and have a full tamper-evident history of everything that happened.
-
----
-
 ## Default Customers
 
 Seeded automatically on first run. Editable from the **Customers** tab.
