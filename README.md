@@ -1,3 +1,6 @@
+
+https://github.com/user-attachments/assets/b6510e89-04fa-45ed-8fb5-24ecd0858790
+
 # Wise Quote — Freight Bidding Agent
 
 An LLM-powered freight rate automation system. Inbound shipment requests arrive via a manual form or an email inbox, trigger a two-round competitive carrier bidding process, apply customer-specific markups, and produce structured quotes — all orchestrated by an AI agent and managed through a full-featured Streamlit operations dashboard.
